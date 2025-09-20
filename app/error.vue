@@ -12,6 +12,10 @@ const formattedStatusMessage = () => {
 
   return error.statusMessage;
 };
+
+const goHome = () => {
+  navigateTo('/');
+};
 </script>
 
 <template>
@@ -19,7 +23,9 @@ const formattedStatusMessage = () => {
     <h1>{{ error.statusCode }}</h1>
     <p>{{ formattedStatusMessage() }}</p>
 
-    <ActionButton class="error__button">На главную</ActionButton>
+    <ActionButton class="error__button" @click="goHome()">
+      На главную
+    </ActionButton>
   </main>
 </template>
 
