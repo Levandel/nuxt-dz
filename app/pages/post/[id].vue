@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const route = useRoute();
+</script>
 
 <template>
-  <div>POST</div>
+  <div>POST {{ route.params.id }}</div>
 </template>
