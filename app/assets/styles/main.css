@@ -1,0 +1,18 @@
+:root {
+  --main-font: 'Roboto', Open Sans, Arial;
+
+  --color-white: #ffffff;
+  --color-black: #191919;
+  --color-black-light: #232323;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto';
+  src: url('./fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+}
+
+body {
+  color: var(--color-black);
+  font-family: var(--main-font);
+}
