@@ -2,5 +2,14 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: {enabled: true},
-  modules: ['@nuxt/image', '@nuxt/eslint', '@nuxt/scripts'],
+  modules: ['@nuxt/image', '@nuxt/icon', '@nuxt/eslint', '@nuxt/scripts'],
+
+  icon: {
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: './app/assets/icons',
+      },
+    ],
+  },
 });
