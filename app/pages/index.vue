@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type {PostData} from '~/inerfaces/post.interface';
+import type {GetPostDataResponce} from '~/interfaces/post.interface';
 
 const config = useRuntimeConfig();
 const BASE_URL = config.public.apiurl;
 
-const {data: postsData} = useFetch<PostData[]>(BASE_URL + 'posts');
+const {data: postsData} = useFetch<GetPostDataResponce>(BASE_URL + 'posts');
 </script>
 
 <template>
@@ -15,7 +15,7 @@ const {data: postsData} = useFetch<PostData[]>(BASE_URL + 'posts');
     </div>
 
     <div class="home-page__posts">
-      <PostCard v-for="post in postsData" :key="post.id" />
+      <PostCard v-for="post in postsData?.posts" :key="post.id" :post="post" />
     </div>
   </main>
 </template>
