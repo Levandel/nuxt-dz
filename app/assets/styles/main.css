@@ -3,7 +3,9 @@
 
   --color-white: #ffffff;
   --color-black: #191919;
-  --color-black-light: #232323;
+  --color-gray-dark: #757575;
+  --color-gray-light: #808080;
+  --color-black-light: #292929;
 
   --sidebar-width: 80px;
 }

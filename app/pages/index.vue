@@ -1,5 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>HOME</div>
+  <div>
+    <div>HOME</div>
+    <PostCard />
+  </div>
 </template>
