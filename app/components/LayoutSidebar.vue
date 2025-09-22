@@ -26,6 +26,7 @@
   justify-content: space-between;
   padding-top: var(--sidebar-padding);
   padding-bottom: var(--sidebar-padding);
+  border-right: 1px solid var(--color-divider);
 }
 .sidebar__bottom {
   display: flex;
