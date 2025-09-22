@@ -2,9 +2,9 @@
 import type {GetPostDataResponce} from '~/interfaces/post.interface';
 
 const config = useRuntimeConfig();
-const BASE_URL = config.public.apiurl;
+const API_URL = config.public.apiurl;
 
-const {data: postsData} = useFetch<GetPostDataResponce>(BASE_URL + 'posts');
+const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts');
 </script>
 
 <template>
@@ -31,8 +31,8 @@ const {data: postsData} = useFetch<GetPostDataResponce>(BASE_URL + 'posts');
 .home-page {
   display: flex;
   flex-direction: column;
-  margin-top: 48px;
   margin-bottom: 60px;
+  margin-top: 48px;
   gap: 38px;
 
   &__tabs {
