@@ -4,6 +4,12 @@ export default defineNuxtConfig({
   devtools: {enabled: true},
   modules: ['@nuxt/image', '@nuxt/icon', '@nuxt/eslint', '@nuxt/scripts'],
 
+  runtimeConfig: {
+    public: {
+      apiurl: '',
+    },
+  },
+
   icon: {
     customCollections: [
       {

@@ -1,6 +1,13 @@
 <script setup lang="ts">
-const liked = ref<number>(10);
-const disliked = ref<number>(1);
+import type {PostData} from '~/interfaces/post.interface';
+
+const {post} = defineProps<{
+  post: PostData;
+}>();
+
+const goToPost = (id: number) => {
+  navigateTo(`/post/${id}`);
+};
 </script>
 
 <template>
@@ -13,23 +20,23 @@ const disliked = ref<number>(1);
 
       <p class="post-card__top-date">4 дня назад</p>
     </div>
-    <h2 class="post-card__header">Добавить функцию голосования</h2>
-    <p class="post-card__text">
-      Попробовать добавить в приложение функцию голосования, которая позволит
-      определить, какая фича более полезна, а какая нет. После добавления поста
-      появляется...
-    </p>
+    <div class="post-card__middle" @click="goToPost(post.id)">
+      <h2 class="post-card__header">{{ post.title }}</h2>
+      <p class="post-card__text">
+        {{ post.content }}
+      </p>
+    </div>
 
     <div class="post-card__bottom">
       <div class="post-card__rating">
         <label>
-          {{ liked }}
+          {{ post.likes }}
           <button>
             <Icon name="custom:like" size="18" />
           </button>
         </label>
         <label>
-          {{ disliked }}
+          {{ post.dislikes }}
           <button>
             <Icon name="custom:dislike" size="18" />
           </button>
@@ -56,7 +63,7 @@ const disliked = ref<number>(1);
 .post-card {
   display: flex;
   flex-direction: column;
-  max-width: 534px;
+  max-width: var(--post-max-width);
   gap: 10px;
 
   &__top {
@@ -79,6 +86,12 @@ const disliked = ref<number>(1);
       color: var(--color-black-light);
       font-size: 14px;
     }
+  }
+  &__middle {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 10px;
   }
   &__header {
     font-size: 22px;

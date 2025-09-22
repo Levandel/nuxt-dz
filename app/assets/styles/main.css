@@ -7,7 +7,10 @@
   --color-gray-light: #808080;
   --color-black-light: #292929;
 
+  --color-divider: #e6e6e6;
+
   --sidebar-width: 80px;
+  --post-max-width: 534px;
 }
 
 @font-face {
