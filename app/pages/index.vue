@@ -1,26 +1,21 @@
 <script setup lang="ts">
-const route = useRoute();
+import type {PostData} from '~/inerfaces/post.interface';
 
-const currentSortParam = computed(() => route.query.sort);
+const config = useRuntimeConfig();
+const BASE_URL = config.public.apiurl;
+
+const {data: postsData} = useFetch<PostData[]>(BASE_URL + 'posts');
 </script>
 
 <template>
   <main class="home-page">
     <div class="home-page__tabs">
-      <NuxtLink
-        :class="{'tab-active': currentSortParam === 'date'}"
-        :to="{query: {sort: 'date'}}">
-        По дате
-      </NuxtLink>
-      <NuxtLink
-        :class="{'tab-active': currentSortParam === 'rating'}"
-        :to="{query: {sort: 'rating'}}">
-        По рейтингу
-      </NuxtLink>
+      <NuxtLink to="#"> По дате </NuxtLink>
+      <NuxtLink to="#"> По рейтингу </NuxtLink>
     </div>
 
     <div class="home-page__posts">
-      <PostCard />
+      <PostCard v-for="post in postsData" :key="post.id" />
     </div>
   </main>
 </template>
@@ -53,8 +48,5 @@ const currentSortParam = computed(() => route.query.sort);
     flex-direction: column;
     gap: 38px;
   }
-}
-.tab-active {
-  color: var(--color-gray-dark);
 }
 </style>
