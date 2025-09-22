@@ -4,6 +4,10 @@ import type {PostData} from '~/interfaces/post.interface';
 const {post} = defineProps<{
   post: PostData;
 }>();
+
+const goToPost = (id: number) => {
+  navigateTo(`/post/${id}`);
+};
 </script>
 
 <template>
@@ -16,10 +20,12 @@ const {post} = defineProps<{
 
       <p class="post-card__top-date">4 дня назад</p>
     </div>
-    <h2 class="post-card__header">{{ post.title }}</h2>
-    <p class="post-card__text">
-      {{ post.content }}
-    </p>
+    <div class="post-card__middle" @click="goToPost(post.id)">
+      <h2 class="post-card__header">{{ post.title }}</h2>
+      <p class="post-card__text">
+        {{ post.content }}
+      </p>
+    </div>
 
     <div class="post-card__bottom">
       <div class="post-card__rating">
@@ -57,9 +63,7 @@ const {post} = defineProps<{
 .post-card {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid var(--color-divider);
-  padding-bottom: 38px;
-  max-width: 534px;
+  max-width: var(--post-max-width);
   gap: 10px;
 
   &__top {
@@ -82,6 +86,12 @@ const {post} = defineProps<{
       color: var(--color-black-light);
       font-size: 14px;
     }
+  }
+  &__middle {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 10px;
   }
   &__header {
     font-size: 22px;

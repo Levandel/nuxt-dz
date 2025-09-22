@@ -15,7 +15,14 @@ const {data: postsData} = useFetch<GetPostDataResponce>(BASE_URL + 'posts');
     </div>
 
     <div class="home-page__posts">
-      <PostCard v-for="post in postsData?.posts" :key="post.id" :post="post" />
+      <div
+        v-for="post in postsData?.posts"
+        :key="post.id"
+        class="home-page__posts-cell">
+        <PostCard :post="post" />
+
+        <div class="home-page__divider" />
+      </div>
     </div>
   </main>
 </template>
@@ -47,6 +54,17 @@ const {data: postsData} = useFetch<GetPostDataResponce>(BASE_URL + 'posts');
     display: flex;
     flex-direction: column;
     gap: 38px;
+
+    &-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 38px;
+    }
+  }
+  &__divider {
+    height: 1px;
+    max-width: var(--post-max-width);
+    border-bottom: 1px solid var(--color-divider);
   }
 }
 </style>
