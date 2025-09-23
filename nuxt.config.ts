@@ -31,4 +31,8 @@ export default defineNuxtConfig({
       'postcss-nested': {},
     },
   },
+
+  piniaPluginPersistedstate: {
+    storage: 'localStorage',
+  },
 });

@@ -31,13 +31,15 @@ watch(currentPage, () => {
 const query = computed(() => ({
   page: route.query.page || 1,
   sort: route.query.sort || 'date',
-  page_size: route.query.total_pages || 10,
 }));
 
-const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts', {
-  key: 'get-posts',
-  query,
-});
+const {data: postsData, refresh} = useFetch<GetPostDataResponce>(
+  API_URL + 'posts',
+  {
+    key: 'get-posts',
+    query,
+  },
+);
 </script>
 
 <template>
@@ -60,7 +62,7 @@ const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts', {
         v-for="post in postsData?.posts"
         :key="post.id"
         class="home-page__posts-cell">
-        <PostCard :post="post" />
+        <PostCard :post="post" @refresh-data="refresh()" />
 
         <div class="home-page__divider" />
       </div>
