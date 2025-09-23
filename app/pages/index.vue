@@ -1,17 +1,42 @@
 <script setup lang="ts">
 import type {GetPostDataResponce} from '~/interfaces/post.interface';
 
+const route = useRoute();
+const router = useRouter();
 const config = useRuntimeConfig();
 const API_URL = config.public.apiurl;
 
-const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts');
+if (!route.query.sort) {
+  router.replace({
+    query: {
+      sort: 'date',
+    },
+  });
+}
+
+const query = computed(() => ({
+  sort: route.query.sort || 'date',
+}));
+
+const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts', {
+  key: 'get-posts',
+  query,
+});
 </script>
 
 <template>
   <main class="home-page">
     <div class="home-page__tabs">
-      <NuxtLink to="#"> По дате </NuxtLink>
-      <NuxtLink to="#"> По рейтингу </NuxtLink>
+      <NuxtLink
+        :class="{'home-page__tabs-active': route.query.sort === 'date'}"
+        :to="{query: {sort: 'date'}}">
+        По дате
+      </NuxtLink>
+      <NuxtLink
+        :class="{'home-page__tabs-active': route.query.sort === 'rating'}"
+        :to="{query: {sort: 'rating'}}">
+        По рейтингу
+      </NuxtLink>
     </div>
 
     <div class="home-page__posts">
@@ -48,6 +73,10 @@ const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts');
     }
     & a:hover {
       color: var(--color-black-light);
+    }
+
+    &-active {
+      color: var(--color-gray-dark);
     }
   }
   &__posts {
