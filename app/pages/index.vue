@@ -6,16 +6,32 @@ const router = useRouter();
 const config = useRuntimeConfig();
 const API_URL = config.public.apiurl;
 
+const currentPage = computed(() => Number(route.query.page) || 1);
+
+const totalPages = computed(() => postsData.value?.total_pages || 1);
+
 if (!route.query.sort) {
   router.replace({
     query: {
       sort: 'date',
+      page: 1,
     },
   });
 }
 
+watch(currentPage, () => {
+  router.replace({
+    query: {
+      sort: route.query.sort,
+      page: currentPage.value,
+    },
+  });
+});
+
 const query = computed(() => ({
+  page: route.query.page || 1,
   sort: route.query.sort || 'date',
+  page_size: route.query.total_pages || 10,
 }));
 
 const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts', {
@@ -29,12 +45,12 @@ const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts', {
     <div class="home-page__tabs">
       <NuxtLink
         :class="{'home-page__tabs-active': route.query.sort === 'date'}"
-        :to="{query: {sort: 'date'}}">
+        :to="{query: {sort: 'date', page: currentPage}}">
         По дате
       </NuxtLink>
       <NuxtLink
         :class="{'home-page__tabs-active': route.query.sort === 'rating'}"
-        :to="{query: {sort: 'rating'}}">
+        :to="{query: {sort: 'rating', page: currentPage}}">
         По рейтингу
       </NuxtLink>
     </div>
@@ -49,6 +65,8 @@ const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts', {
         <div class="home-page__divider" />
       </div>
     </div>
+
+    <PagePagination v-model="currentPage" :total-pages="totalPages" />
   </main>
 </template>
 

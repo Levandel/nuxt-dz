@@ -11,5 +11,7 @@ export interface PostData {
 }
 
 export interface GetPostDataResponce {
+  page: number;
   posts: PostData[];
+  total_pages: number;
 }
