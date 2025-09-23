@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/eslint',
     '@nuxt/scripts',
+    'pinia-plugin-persistedstate',
   ],
 
   runtimeConfig: {
