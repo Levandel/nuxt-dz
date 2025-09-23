@@ -2,7 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: {enabled: true},
-  modules: ['@nuxt/image', '@nuxt/icon', '@nuxt/eslint', '@nuxt/scripts'],
+  modules: [
+    '@nuxt/icon',
+    '@pinia/nuxt',
+    '@nuxt/image',
+    '@nuxt/eslint',
+    '@nuxt/scripts',
+  ],
 
   runtimeConfig: {
     public: {
