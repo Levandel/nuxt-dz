@@ -5,8 +5,38 @@ const {post} = defineProps<{
   post: PostData;
 }>();
 
+const emits = defineEmits(['refreshData']);
+
+const favoriteStore = useFavoriteStore();
+
 const goToPost = (id: number) => {
   navigateTo(`/post/${id}`);
+};
+
+const chooseIconName = (name: string) => {
+  const existedPost = favoriteStore.reactedPosts.find(
+    (item) => item.id === post.id,
+  );
+
+  if (!existedPost) {
+    return name;
+  }
+
+  if (existedPost?.action === name) {
+    return name + '-filled';
+  } else {
+    return name;
+  }
+};
+
+const handleLikePost = () => {
+  favoriteStore.reactPost(post.id, 'like');
+  emits('refreshData');
+};
+
+const handleDislikePost = () => {
+  favoriteStore.reactPost(post.id, 'dislike');
+  emits('refreshData');
 };
 </script>
 
@@ -28,20 +58,22 @@ const goToPost = (id: number) => {
     </div>
 
     <div class="post-card__bottom">
-      <div class="post-card__rating">
-        <label>
-          {{ post.likes }}
-          <button>
-            <Icon name="custom:like" size="18" />
-          </button>
-        </label>
-        <label>
-          {{ post.dislikes }}
-          <button>
-            <Icon name="custom:dislike" size="18" />
-          </button>
-        </label>
-      </div>
+      <ClientOnly>
+        <div class="post-card__rating">
+          <label>
+            {{ post.likes }}
+            <button @click="handleLikePost()">
+              <Icon :name="`custom:${chooseIconName('like')}`" size="18" />
+            </button>
+          </label>
+          <label>
+            {{ post.dislikes }}
+            <button @click="handleDislikePost()">
+              <Icon :name="`custom:${chooseIconName('dislike')}`" size="18" />
+            </button>
+          </label>
+        </div>
+      </ClientOnly>
 
       <div class="post-card__actions">
         <button>

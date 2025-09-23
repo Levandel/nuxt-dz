@@ -1,17 +1,60 @@
 <script setup lang="ts">
 import type {GetPostDataResponce} from '~/interfaces/post.interface';
 
+const route = useRoute();
+const router = useRouter();
 const config = useRuntimeConfig();
 const API_URL = config.public.apiurl;
 
-const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts');
+const currentPage = computed(() => Number(route.query.page) || 1);
+
+const totalPages = computed(() => postsData.value?.total_pages || 1);
+
+if (!route.query.sort) {
+  router.replace({
+    query: {
+      sort: 'date',
+      page: 1,
+    },
+  });
+}
+
+watch(currentPage, () => {
+  router.replace({
+    query: {
+      sort: route.query.sort,
+      page: currentPage.value,
+    },
+  });
+});
+
+const query = computed(() => ({
+  page: route.query.page || 1,
+  sort: route.query.sort || 'date',
+}));
+
+const {data: postsData, refresh} = useFetch<GetPostDataResponce>(
+  API_URL + 'posts',
+  {
+    key: 'get-posts',
+    query,
+  },
+);
 </script>
 
 <template>
   <main class="home-page">
     <div class="home-page__tabs">
-      <NuxtLink to="#"> По дате </NuxtLink>
-      <NuxtLink to="#"> По рейтингу </NuxtLink>
+      <NuxtLink
+        :class="{'home-page__tabs-active': route.query.sort === 'date'}"
+        :to="{query: {sort: 'date', page: currentPage}}">
+        По дате
+      </NuxtLink>
+      <NuxtLink
+        :class="{'home-page__tabs-active': route.query.sort === 'rating'}"
+        :to="{query: {sort: 'rating', page: currentPage}}">
+        По рейтингу
+      </NuxtLink>
     </div>
 
     <div class="home-page__posts">
@@ -19,11 +62,13 @@ const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts');
         v-for="post in postsData?.posts"
         :key="post.id"
         class="home-page__posts-cell">
-        <PostCard :post="post" />
+        <PostCard :post="post" @refresh-data="refresh()" />
 
         <div class="home-page__divider" />
       </div>
     </div>
+
+    <PagePagination v-model="currentPage" :total-pages="totalPages" />
   </main>
 </template>
 
@@ -48,6 +93,10 @@ const {data: postsData} = useFetch<GetPostDataResponce>(API_URL + 'posts');
     }
     & a:hover {
       color: var(--color-black-light);
+    }
+
+    &-active {
+      color: var(--color-gray-dark);
     }
   }
   &__posts {

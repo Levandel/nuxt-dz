@@ -11,5 +11,12 @@ export interface PostData {
 }
 
 export interface GetPostDataResponce {
+  page: number;
   posts: PostData[];
+  total_pages: number;
+}
+
+export interface PostActions {
+  id: number;
+  action: string;
 }
