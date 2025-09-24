@@ -14,7 +14,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      titleTemplate: '&s | VoteApp',
+      titleTemplate: '%s | VoteApp',
     },
   },
 
