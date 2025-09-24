@@ -2,10 +2,9 @@
 import type {PostData} from '~/interfaces/post.interface';
 
 const route = useRoute();
-const config = useRuntimeConfig();
 
 const postId = route.params.id;
-const API_URL = config.public.apiurl;
+const API_URL = useAPI();
 
 const {data: postData} = useFetch<PostData>(API_URL + `posts/${postId}`);
 

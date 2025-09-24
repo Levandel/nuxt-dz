@@ -1,27 +1,34 @@
 <script setup lang="ts">
+import type {PostData} from '~/interfaces/post.interface';
+
 definePageMeta({
   middleware: 'auth',
 });
 
 useSeoMeta({
-  title: 'Создание поста',
-  description: 'Создание поста VoteApp',
+  title: 'Редактирование поста',
+  description: 'Редактирование поста VoteApp',
 });
 
+const route = useRoute();
 const API_URL = useAPI();
 const authStore = useAuthStore();
 
-const title = ref<string>('');
-const content = ref<string>('');
+const postId = route.params.id;
+
+const {data: postData} = await useFetch<PostData>(API_URL + `posts/${postId}`);
+
+const title = ref<string | undefined>(postData.value?.title);
+const content = ref<string | undefined>(postData.value?.content);
 
 const createPost = async () => {
   try {
-    await $fetch(API_URL + 'posts/create', {
+    await $fetch(API_URL + `posts/${postId}`, {
       headers: {
         Authorization: `Bearer ${authStore.token}`,
       },
 
-      method: 'POST',
+      method: 'PUT',
       body: {
         title: title.value,
         content: content.value,
@@ -36,29 +43,29 @@ const createPost = async () => {
 </script>
 
 <template>
-  <main class="create-post-page">
-    <div class="create-post-page__icon">
+  <main class="edit-post-page">
+    <div class="edit-post-page__icon">
       <Icon name="custom:plus" size="12" />
     </div>
 
     <InputPostTitle
       v-model="title"
-      class="create-post-page__title"
+      class="edit-post-page__title"
       placeholder="Тема" />
 
     <PostTextarea
       v-model="content"
-      class="create-post-page__content"
+      class="edit-post-page__content"
       placeholder="Текст..." />
 
-    <ActionButton class="create-post-page__button" @click="createPost()">
+    <ActionButton class="crediteate-post-page__button" @click="createPost()">
       Сохранить
     </ActionButton>
   </main>
 </template>
 
 <style scoped>
-.create-post-page {
+.edit-post-page {
   position: relative;
   margin-left: 153px;
   margin-top: 39px;

@@ -4,6 +4,7 @@ import type {GetPostDataResponce} from '~/interfaces/post.interface';
 const API_URL = useAPI();
 const route = useRoute();
 const router = useRouter();
+const authStore = useAuthStore();
 
 const currentPage = computed(() => Number(route.query.page) || 1);
 
@@ -48,6 +49,13 @@ useSeoMeta({
 
 <template>
   <main class="home-page">
+    <label v-if="authStore.token" class="home-page__add-post">
+      <button class="home-page__add-icon" @click="navigateTo('/post/create')">
+        <Icon name="custom:plus" size="12" />
+      </button>
+      <p>Добавить новое обновление для голосования</p>
+    </label>
+
     <div class="home-page__tabs">
       <NuxtLink
         :class="{'home-page__tabs-active': route.query.sort === 'date'}"
@@ -85,6 +93,26 @@ useSeoMeta({
   margin-top: 48px;
   gap: 38px;
 
+  &__add-post {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+
+    & p {
+      font-size: 16px;
+      line-height: 1;
+    }
+  }
+  &__add-icon {
+    display: grid;
+    border-radius: 50%;
+    place-content: center;
+    background-color: var(--color-divider);
+    cursor: pointer;
+    padding: 12px;
+    border: none;
+  }
   &__tabs {
     display: flex;
     align-items: center;
