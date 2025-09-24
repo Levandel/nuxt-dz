@@ -38,6 +38,10 @@ const handleDislikePost = () => {
   favoriteStore.reactPost(post.id, 'dislike');
   emits('refreshData');
 };
+
+const handleEditPost = (id: number) => {
+  navigateTo(`/post/edit/${id}`);
+};
 </script>
 
 <template>
@@ -81,7 +85,7 @@ const handleDislikePost = () => {
         </button>
 
         <label>
-          <button>
+          <button @click="handleEditPost(post.id)">
             <Icon name="custom:edit" size="14" />
           </button>
           Изменить
