@@ -1,5 +1,28 @@
 <script setup lang="ts">
-const handleLogin = () => {};
+import type {AuthResponse} from '~/interfaces/auth.interface';
+
+const API_URL = useAPI();
+const authStore = useAuthStore();
+
+const email = ref<string | undefined>();
+const password = ref<string | undefined>();
+
+const handleLogin = async () => {
+  try {
+    const data = await $fetch<AuthResponse>(API_URL + 'auth/login', {
+      method: 'POST',
+      body: {
+        email: email.value,
+        password: password.value,
+      },
+    });
+
+    authStore.user = data.user;
+    authStore.token = data.token;
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 
 <template>
@@ -7,10 +30,12 @@ const handleLogin = () => {};
     <h1 class="login-page__header">Вход на платформу</h1>
 
     <form class="login-page__form">
-      <InputField placeholder="Email" icon-name="email" />
-      <InputField placeholder="Пароль" icon-name="key" />
+      <InputField v-model="email" placeholder="Email" icon-name="email" />
+      <InputField v-model="password" placeholder="Пароль" icon-name="key" />
 
-      <ActionButton @click="handleLogin()">Войти в аккаунт</ActionButton>
+      <ActionButton @click.stop.prevent="handleLogin()">
+        Войти в аккаунт
+      </ActionButton>
     </form>
   </main>
 </template>
