@@ -6,8 +6,12 @@ export const useAuthStore = defineStore(
     const user = ref<UserData>({id: null, email: ''});
     const token = ref<string | undefined>('');
 
-    const getToken = (value: string) => {
+    const setToken = (value: string) => {
       token.value = value;
+    };
+
+    const setUserData = (data: UserData) => {
+      user.value = data;
     };
 
     const clearToken = () => {
@@ -18,8 +22,9 @@ export const useAuthStore = defineStore(
       user,
       token,
 
-      getToken,
+      setToken,
       clearToken,
+      setUserData,
     };
   },
   {
