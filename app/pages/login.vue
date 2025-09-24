@@ -19,6 +19,8 @@ const handleLogin = async () => {
 
     authStore.user = data.user;
     authStore.token = data.token;
+
+    navigateTo('/');
   } catch (error) {
     console.error(error);
   }
