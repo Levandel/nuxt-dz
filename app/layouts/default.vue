@@ -19,7 +19,7 @@
   z-index: 5;
 }
 .layout__content {
-  --content-margin-left: calc(var(--sidebar-width) + 136px);
+  --content-margin-left: var(--sidebar-width);
 
   width: calc(100% - var(--content-margin-left));
   margin-left: var(--content-margin-left);

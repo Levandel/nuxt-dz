@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import type {GetPostDataResponce} from '~/interfaces/post.interface';
 
+const API_URL = useAPI();
 const route = useRoute();
 const router = useRouter();
-const config = useRuntimeConfig();
-const API_URL = config.public.apiurl;
 
 const currentPage = computed(() => Number(route.query.page) || 1);
 
@@ -77,6 +76,7 @@ const {data: postsData, refresh} = useFetch<GetPostDataResponce>(
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
+  margin-left: 136px;
   margin-top: 48px;
   gap: 38px;
 

@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const authStore = useAuthStore();
+</script>
 
 <template>
   <aside class="sidebar">
@@ -9,7 +11,9 @@
     <div class="sidebar__bottom">
       <IconsPurpleLogo />
 
-      <Icon name="custom:logout" size="24" />
+      <NuxtLink to="/" @click="authStore.logout()">
+        <Icon name="custom:logout" size="24" />
+      </NuxtLink>
     </div>
   </aside>
 </template>
