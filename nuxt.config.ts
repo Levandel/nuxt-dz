@@ -12,6 +12,12 @@ export default defineNuxtConfig({
     'pinia-plugin-persistedstate',
   ],
 
+  app: {
+    head: {
+      titleTemplate: '&s | VoteApp',
+    },
+  },
+
   runtimeConfig: {
     public: {
       apiurl: '',

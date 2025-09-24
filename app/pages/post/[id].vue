@@ -8,6 +8,11 @@ const postId = route.params.id;
 const API_URL = config.public.apiurl;
 
 const {data: postData} = useFetch<PostData>(API_URL + `posts/${postId}`);
+
+useSeoMeta({
+  title: postData.value?.title,
+  description: postData.value?.content.slice(0, 100),
+});
 </script>
 
 <template>

@@ -2,6 +2,11 @@
 definePageMeta({
   middleware: 'auth',
 });
+
+useSeoMeta({
+  title: 'Создание поста',
+  description: 'Создание поста VoteApp',
+});
 </script>
 
 <template>
