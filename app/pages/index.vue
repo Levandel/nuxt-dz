@@ -39,6 +39,11 @@ const {data: postsData, refresh} = useFetch<GetPostDataResponce>(
     query,
   },
 );
+
+useSeoMeta({
+  title: 'Главная',
+  description: 'Главная страница VoteApp',
+});
 </script>
 
 <template>

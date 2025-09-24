@@ -25,6 +25,11 @@ const handleLogin = async () => {
     console.error(error);
   }
 };
+
+useSeoMeta({
+  title: 'Вход на платформу',
+  description: 'Вход на платформу VoteApp',
+});
 </script>
 
 <template>
