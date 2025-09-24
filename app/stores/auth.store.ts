@@ -13,18 +13,28 @@ export const useAuthStore = defineStore(
     const setUserData = (data: UserData) => {
       user.value = data;
     };
+    const clearUserData = () => {
+      user.value = {id: null, email: ''};
+    };
 
     const clearToken = () => {
       token.value = undefined;
+    };
+
+    const logout = () => {
+      clearToken();
+      clearUserData();
     };
 
     return {
       user,
       token,
 
+      logout,
       setToken,
       clearToken,
       setUserData,
+      clearUserData,
     };
   },
   {
