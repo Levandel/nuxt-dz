@@ -9,6 +9,7 @@
 <style scoped>
 .action-button {
   width: 100%;
+  height: 41px;
   border: none;
   line-height: 1;
   font-size: 16px;

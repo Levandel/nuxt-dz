@@ -1,0 +1,26 @@
+export const useAuthStore = defineStore(
+  'authStore',
+  () => {
+    const user = ref({});
+    const token = ref<string | undefined>();
+
+    const getToken = (value: string) => {
+      token.value = value;
+    };
+
+    const clearToken = () => {
+      token.value = undefined;
+    };
+
+    return {
+      user,
+      token,
+
+      getToken,
+      clearToken,
+    };
+  },
+  {
+    persist: true,
+  },
+);

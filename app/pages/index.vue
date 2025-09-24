@@ -77,6 +77,7 @@ const {data: postsData, refresh} = useFetch<GetPostDataResponce>(
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
+  margin-left: 136px;
   margin-top: 48px;
   gap: 38px;
 
