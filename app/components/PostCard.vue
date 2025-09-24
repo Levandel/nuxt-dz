@@ -7,6 +7,8 @@ const {post} = defineProps<{
 
 const emits = defineEmits(['refreshData']);
 
+const API_URL = useAPI();
+const authStore = useAuthStore();
 const favoriteStore = useFavoriteStore();
 
 const goToPost = (id: number) => {
@@ -41,6 +43,22 @@ const handleDislikePost = () => {
 
 const handleEditPost = (id: number) => {
   navigateTo(`/post/edit/${id}`);
+};
+
+const handleDeletePost = async (id: number) => {
+  try {
+    await $fetch(API_URL + `posts/${id}`, {
+      headers: {
+        Authorization: `Bearer ${authStore.token}`,
+      },
+
+      method: 'DELETE',
+    });
+
+    emits('refreshData');
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
 
@@ -80,7 +98,7 @@ const handleEditPost = (id: number) => {
       </ClientOnly>
 
       <div class="post-card__actions">
-        <button>
+        <button @click="handleDeletePost(post.id)">
           <Icon name="custom:remove" size="17" />
         </button>
 
